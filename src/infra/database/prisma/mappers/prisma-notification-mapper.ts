@@ -1,5 +1,7 @@
 // Mappers are used to define how the data is visualized in the response.
 // And converting the response to Prisma layer
+// Disclaimer: There are the diffence between App Layer (Entitie Notification)
+// and Persistent Layer (Prisma and Database)
 
 import { Notification as RawNotification } from '@prisma/client';
 import { Notification } from '@app/entities/Notifications';
