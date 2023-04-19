@@ -12,14 +12,14 @@
   <a href="#notifications-service">Notifications Service</a> •
   <a href="#instalação">Instalação</a> •
   <a href="#tecnologias">Tecnologias</a> •
-  <a href="#autor">Autor</a>  
+  <a href="#autor">Autor</a>
 </p>
 
 <br>
 
 ## Sobre
 
-Projeto desenvolvido os conceitos de Clean Arch, DDD, SOLID, Decorator, Adapters, Mappers, ViewModels, DI (Depedency Injection), Use-cases pattern e Jest.
+Projeto desenvolvido os conceitos de Clean Arch, DDD, SOLID, Decorator, Adapters, Repositories, InMemoryDatabase, Mappers, ViewModels, DI (Depedency Injection), Use-cases pattern e Jest.
 
 Prisma como ORM (Object Relational Mapper)
 Typescript (superset do Javascript com tipagem estática)
