@@ -1,73 +1,139 @@
+# Notifications Service - NestJS - Clean Architecture
+
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <img src="https://img.shields.io/static/v1?label=Notifications&message=Service&color=blueviolet&style=for-the-badge"/>
+  <img src="https://img.shields.io/github/license/MrRioja/notifications-service?color=blueviolet&logo=License&style=for-the-badge"/>
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/ocoiel/notification-service?color=blueviolet&logo=TypeScript&logoColor=white&style=for-the-badge">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ocoiel/notification-service?color=blueviolet&style=for-the-badge">
+</p>
+<br>
+
+<p align="center">
+  <a href="#sobre">Sobre</a> •
+  <a href="#notifications-service">Notifications Service</a> •
+  <a href="#instalação">Instalação</a> •
+  <a href="#tecnologias">Tecnologias</a> •
+  <a href="#autor">Autor</a>  
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<br>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Sobre
 
-## Description
+Projeto desenvolvido os conceitos de Clean Arch, DDD, SOLID, Decorator, Adapters, Mappers, ViewModels, DI (Depedency Injection), Use-cases pattern e Jest.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Prisma como ORM (Object Relational Mapper)
+Typescript (superset do Javascript com tipagem estática)
+Apache Kafka (mensageria)
 
-## Installation
+<img src="./readme/wallpaper.png" alt="Wallpaper" />
+
+## Notifications Service
+
+O Notifications Service é um microsserviço responsável por lidar com notificações de diversas fontes. A ideia do projeto é entender como arquitetar um microsserviço de melhor maneira afim de tê-lo desacoplado de qualquer tecnologia do meio externo e que seja altamente escalável, seguindo as melhores praticas de programação com esse tipo de arquitetura e as tecnologias mais modernas do momento no mundo do NodeJS.
+
+Esse projeto é um consumer do Kafka que irá consumir mensagens de um tópico chamado `notifications.send-notification` e irá realizar registros das notificações em uma tabela no banco de dados.
+
+O cluster Kafka pode ser criado de diversas formas e integrado ao projeto, a maneira realizada aqui foi utilizando o serviço [Upstash](https://console.upstash.com/kafka). Ao acessa-lo, basta criar uma conta, criar o cluster e tópico e conectar a aplicação a ele. Deixo abaixo um exemplo do dashboard de uso do serviço aonde realizei os testes da aplicação:
+
+![Upstash Dashboard](./readme/upstash-dash.png)
+
+Como podemos ver acima, no momento do print-screen, havia produzido 30 mensagens, das quais 27 foram consumidas por esse microsserviço e registradas em nosso banco de dados.
+
+Ao executar a aplicação, ela se conecta ao nosso cluster e consome as mensagens que estão no tópico:
+
+![App start log](./readme/app-start-log.png)
+
+Caso existam mensagens a serem consumidas, a aplicação as consome e gera os registros em nosso BD, nesse caso, um banco SQLite. Vamos ver os registros no exemplo abaixo:
+
+![Notification table](./readme/notifications-table.png)
+
+A aplicação utiliza o Prisma e executando o comando `prisma studio` conseguimos subir uma interface web para visualizar nosso banco de dados, aonde podemos ver as notificações sendo registradas.
+
+Para manipular nossos registros a aplicação conta com uma API REST contendo endpoints para criar e cancelar notificações, marca-las como lidas e não lidas, além de rotas para obter o total de notificações ou as próprias notificações de um usuário.
+
+Deixarei abaixo a coleção das requisições para serem importadas no Insomnia:
+
+[![Run in Insomnia](https://insomnia.rest/images/run.svg)](./readme/endpoints.json)
+
+Como esse microsserviço é apenas um consumer, deixarei nesse repositório a pasta `notifications-kafka-producer`, a qual contem o código de um simples producer kafka para gerar as mensagens a serem consumidas pelo notifications-service.
+
+## Instalação
+
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
+Além disso é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/).
+
+### 🎲 Rodando o Back End (servidor)
 
 ```bash
+# Clone este repositório
+$ git clone git@github.com:MrRioja/notifications-service.git
+
+# Acesse a pasta do projeto no terminal/cmd
+$ cd notifications-service
+
+# Instale as dependências
 $ npm install
-```
+# Caso prefira usar o Yarn execute o comando abaixo
+$ yarn
+# Caso prefira usar o pnpm execute o comando abaixo
+$ pnpm i
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
+# Execute a aplicação em modo de desenvolvimento
 $ npm run start:dev
+# Caso prefira usar o Yarn execute o comando abaixo
+$ yarn start:dev
+# Caso prefira usar o pnpm execute o comando abaixo
+$ pnpm run start:dev
 
-# production mode
-$ npm run start:prod
+# Execute os testes da aplicação
+$ npm run start:test
+# Caso prefira usar o Yarn execute o comando abaixo
+$ yarn start:test
+# Execute os testes da aplicação
+$ pnpm run start:test
+
+# O servidor inciará na porta 3333 - acesse <http://localhost:3333>
 ```
 
-## Test
+## Tecnologias
 
-```bash
-# unit tests
-$ npm run test
+<img align="left" src="https://profilinator.rishav.dev/skills-assets/nodejs-original-wordmark.svg" alt="Node.js" height="75" />
 
-# e2e tests
-$ npm run test:e2e
+<img align="left" src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2017/8/30/ccdab75832d3da51023b07c109c3971a~tplv-t2oaga2asx-image.image" alt="NestJS" height="75"/>
 
-# test coverage
-$ npm run test:cov
-```
+<img align="left" src="https://images.velog.io/images/euneun/post/e030edaf-3157-480c-9b86-fc4e7846f9c5/jest.png" alt="Jest" height="75" />
 
-## Support
+<img align="left" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Apache_kafka_wordtype.svg/2560px-Apache_kafka_wordtype.svg.png" alt="Kafka" height="75" />
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+<br><br><br>
 
-## Stay in touch
+## Autor
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+<div align="center">
+<img src="https://images.weserv.nl/?url=avatars.githubusercontent.com/u/33906351?v=4&h=100&w=100&fit=cover&mask=circle&maxage=7d" />
+<h1>Gabriel Albuquerque</h1>
+<strong>Software Developer</strong>
+<br/>
+<br/>
 
-## License
+<a href="https://linkedin.com/in/albuquerque-gabrielc" target="_blank">
+<img alt="LinkedIn" src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white"/>
+</a>
 
-Nest is [MIT licensed](LICENSE).
+<a href="https://github.com/ocoiel" target="_blank">
+<img alt="GitHub" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white"/>
+</a>
+
+<a href="mailto:albuquerque.gabrielc@gmail.com?subject=Fala%20Dev" target="_blank">
+<img alt="Gmail" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
+</a>
+
+<a href="https://api.whatsapp.com/send?phone=5521990363677" target="_blank">
+<img alt="WhatsApp" src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/>
+</a>
+
+<br/>
+<br/>
+</div>
