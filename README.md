@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/static/v1?label=Notifications&message=Service&color=blueviolet&style=for-the-badge"/>
-  <img src="https://img.shields.io/github/license/MrRioja/notifications-service?color=blueviolet&logo=License&style=for-the-badge"/>
+  <img src="https://img.shields.io/github/license/ocoiel/notifications-service?color=blueviolet&logo=License&style=for-the-badge"/>
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/ocoiel/notification-service?color=blueviolet&logo=TypeScript&logoColor=white&style=for-the-badge">
   <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ocoiel/notification-service?color=blueviolet&style=for-the-badge">
 </p>
@@ -68,10 +68,10 @@ Além disso é bom ter um editor para trabalhar com o código como [VSCode](http
 
 ```bash
 # Clone este repositório
-$ git clone git@github.com:MrRioja/notifications-service.git
+$ git clone https://github.com/ocoiel/notification-service.git
 
 # Acesse a pasta do projeto no terminal/cmd
-$ cd notifications-service
+$ cd notification-service
 
 # Instale as dependências
 $ npm install
