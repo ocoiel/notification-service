@@ -19,11 +19,11 @@
 
 ## Sobre
 
-Projeto desenvolvido os conceitos de Clean Arch, DDD, SOLID, Decorator, Adapters, Repositories, InMemoryDatabase, Mappers, ViewModels, DI (Depedency Injection), Use-cases pattern e Jest.
+Projeto desenvolvido usando os conceitos de Clean Arch, DDD, SOLID, Decorator, Adapters, Repositories, InMemoryDatabase, Mappers, ViewModels, DI (Depedency Injection), Use-cases pattern e Jest.
 
-Prisma como ORM (Object Relational Mapper)
-Typescript (superset do Javascript com tipagem estática)
-Apache Kafka (mensageria)
+- Prisma como ORM (Object Relational Mapper)
+- Typescript (superset do Javascript com tipagem estática)
+- Apache Kafka (mensageria)
 
 <img src="./readme/wallpaper.png" alt="Wallpaper" />
 
